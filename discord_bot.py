@@ -21,6 +21,10 @@ sideEffectTemplate ={
                  "side_effect": "",
                  "side_effect_var":""
                  }
+severeSideEffectTemplate = {
+    "vaccine_shot" : "",
+    "severe_side_effect" : ""
+}
 
 vaccineStockTemplate = {
                 "vaccine_shot":"",
@@ -29,7 +33,7 @@ vaccineStockTemplate = {
                 }
 
 mscDICT = {
-    # "userID": {side_effectTemplate, vaccine_stockTemplate}
+    # "userID": {side_effectTemplate, vaccine_stockTemplate, severeSideEffectTemplate}
 }
 # </取得多輪對話資訊>
 
