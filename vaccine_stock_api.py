@@ -49,28 +49,31 @@ def write_response(inputDICT):
     outputSTR
     
     '''
+    outputSTR = ""
     vaccineStockTemplate = {
         'vaccine_shot': "",
         'location': ""
     }
     outputDICT = {}
+    #try:
     if set(vaccineStockTemplate.keys()).difference(inputDICT.keys()) == set():
-        outputDICT["date"] = vaccine_stockDF['date'][0]
-        outputDICT["vaccine_shot"] = inputDICT["vaccine_shot"][0] 
-        outputDICT["location"] = inputDICT['location']# Need to remove [0]
-        outputDICT["quantity"] = vaccine_stockDF[vaccine_stockDF.location == inputDICT['location']].loc[0, outputDICT["vaccine_shot"]] # Need to remove [0]
-        outputSTR = """本機回覆： [{}] 為止, [{}] 疫苗在 [{}] 還有 [{}]劑庫存。""".format(outputDICT["date"],outputDICT["vaccine_shot"],outputDICT["location"],outputDICT["quantity"]).replace("   ", "")
+        for i in range(len(inputDICT["vaccine_shot"])):
+            outputDICT["date"] = dt.datetime.strptime(set(vaccine_stockDF['date'].values).pop(),"%Y-%m-%d")
+            outputDICT["vaccine_shot"] = inputDICT["vaccine_shot"][i] 
+            outputDICT["location"] = inputDICT['location'][i]
+            outputDICT["quantity"] = vaccine_stockDF[vaccine_stockDF.location == inputDICT['location'][i]][outputDICT["vaccine_shot"]].values[0]
+            outputSTR += """{}年{}月{}日為止, {} 疫苗在{}還有{}劑庫存。\n""".format(outputDICT["date"].year,outputDICT["date"].month,outputDICT["date"].day,outputDICT["vaccine_shot"],outputDICT["location"],outputDICT["quantity"]).replace("   ", "")
     else:
         outputSTR = "ERROR: number of keys do not match."
     if not outputDICT["vaccine_shot"] and outputSTR == "": outputSTR = "Vaccine type not registered."
     if not outputDICT["location"] and outputSTR == "": outputSTR = "location not registered."
-    
+    # except:
+    #     print("ERROR: Input String Error.")
     return outputSTR
 
 if __name__ == "__main__":
-    inputLIST = ["臺北市剩下多少劑AZ疫苗"]
+    inputLIST = ["我要查詢AZ在台北的剩餘量","我要查詢AZ在台中的剩餘量"]
     filterLIST=[]
     loki_result = covid_info_bot.runLoki(inputLIST, filterLIST)
-    loki_result['location']= "臺北市"
     response = write_response(loki_result)
     print(response)

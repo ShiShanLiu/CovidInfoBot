@@ -229,8 +229,8 @@ if __name__ == "__main__":
     # print("")
 
     # 輸入其它句子試看看
-    # inputLIST = ["台北還剩下多少az疫苗"]
-<<<<<<< HEAD
+
+
     inputLIST = ["az副作用"]
     filterLIST = []
     resultDICT = runLoki(inputLIST, filterLIST)
@@ -240,10 +240,6 @@ if __name__ == "__main__":
     #         print(resultDICT[i])
     #     else:
     #         pass
-=======
     inputLIST = ["我想知道az副作用"]
-    filterLIST = []
-    resultDICT = runLoki(inputLIST, filterLIST)
->>>>>>> 960b3037e017e68a2578bf738f44b534757f395f
     print(resultDICT)
     # print("Result => {}".format(resultDICT))
